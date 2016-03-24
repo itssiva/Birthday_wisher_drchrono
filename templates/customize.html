@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block 'title' %}Customize {% endblock %}
+{% block content %}
+<div class="user">
+    <b>{{ user.username }}</b>
+</div>
+<div class="user_logout">
+    <a class="btn btn-primary" href="{% url 'logout' %}">Logout&nbsp;&nbsp;<i class="fa fa-sign-out"></i> </a>
+</div>
+
+<form action="{% url 'customize' %}" method="POST" enctype="multipart/form-data" class="col-md-6 col-sm-12 panel panel-success">
+    <div class="panel panel-heading">
+        <strong><h4>Cutomize the Greeting</h4></strong>
+    </div>
+    {% csrf_token %}
+    <div class="form-group {% if form.greeting_type.errors %} has-error{% endif %}">
+        <label for="{{ form.greeting_type.id_for_label }}">{{ form.greeting_type.label }}</label>
+        <select id="{{ form.greeting_type.id_for_label }}" class="form-control" name="{{ form.greeting_type.html_name }}">
+            <option value="e" {% if greeting.greeting_type == 'e' %}selected{% endif %}>Email</option>
+            <option value="s" {% if greeting.greeting_type == 's' %}selected{% endif %}>SMS</option>
+        </select>
+        {% for error in form.greeting_type.errors %}
+            <span class="help-block">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div id="sms" >
+        <div class="panel-group {% if form.sms_message.errors %} has-error{% endif %}">
+            <p><label class="control-label" for="{{ form.sms_message.id_for_label }}">{{ form.sms_message.label }}</label></p>
+            <textarea cols="30" rows="2" class="form-control"
+                    id="{{ form.sms_message.id_for_label }}" name="{{ form.sms_message.html_name }}" maxlength="{{ form.sms_message.field.max_length }}">{{ greeting.sms_message }}</textarea>
+            {% for error in form.sms_message.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="panel-group {% if form.sms_signature.errors %} has-error{% endif %}">
+            <p><label class="control-label" for="{{ form.sms_signature.id_for_label }}">{{ form.sms_signature.label }}</label></p>
+            <textarea cols="30" rows="2" class="form-control"
+                    id="{{ form.sms_signature.id_for_label }}" name="{{ form.sms_signature.html_name }}" maxlength="{{ form.sms_signature.field.max_length }}">{{ greeting.sms_signature }}</textarea>
+            {% for error in form.sms_signature.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="email">
+        <div class="panel-group {% if form.email_subject.errors %} has-error{% endif %}">
+            <p><label class="control-label" for="{{ form.email_subject.id_for_label }}">{{ form.email_subject.label }}</label></p>
+            <textarea cols="30" rows="2" class="form-control"
+                    id="{{ form.email_subject.id_for_label }}" name="{{ form.email_subject.html_name }}" maxlength="{{ form.email_subject.field.max_length }}">{{ greeting.email_subject }}</textarea>
+            {% for error in form.email_subject.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="panel-group {% if form.email_body.errors %} has-error{% endif %}">
+            <p><label class="control-label" for="{{ form.email_body.id_for_label }}">{{ form.email_body.label }}</label> </p>
+            <textarea cols="30" rows="10" class="form-control"
+                    id="{{ form.email_body.id_for_label }}" name="{{ form.email_body.html_name }}" maxlength="{{ form.email_body.field.max_length }}">{{ greeting.email_body }}</textarea>
+            {% for error in form.email_body.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save</button>
+
+</form>
+<div class="attributes col-sm-12 col-md-5">
+Use these attributes to genralize to all patients
+    <h4>Patient Attributes</h4>
+    <ul>
+    {% for attribute in patient_attributes %}
+        <li>{{ attribute }}</li>
+    {% endfor %}
+    </ul>
+    <h4>Doctor Attributes</h4>
+    <ul>
+    {% for attribute in doctor_attributes %}
+        <li>{{ attribute }}</li>
+    {% endfor %}
+    </ul>
+
+</div>
+
+
+{% endblock %}

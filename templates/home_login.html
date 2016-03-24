@@ -1,0 +1,49 @@
+{% load staticfiles %}
+
+<div class="user">
+    <b>{{ user.username }}</b>
+</div>
+<div class="user_logout">
+    <a class="btn btn-primary" href="{% url 'logout' %}">Logout&nbsp;&nbsp;<i class="fa fa-sign-out"></i> </a>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12 card">
+        <a href="{% url 'customize' %}">
+        <div class="thumbnail">
+            <img src="{% static 'img/customize.jpg' %}">
+            <div class="caption">
+                <h5><strong>Customize the greeting content</strong></h5>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-12 card">
+        <div class="thumbnail">
+            <div class="button-toggle">
+            <a href="{% url 'greeting_type' %}" class="{% if type == 'e' %}btn btn-success{% else %}btn btn-primary{% endif %}" title="Click to change">
+                <i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;&nbsp; <i class="{% if type == 'e' %}fa fa-toggle-off fa-3x{% else %}fa fa-toggle-on fa-3x{% endif %}"></i>
+            &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-wechat"></i></a>
+            <div class="state">{% if type == 'e' %}email{% else %}SMS{% endif %}</div>
+            </div>
+                <div class="caption">
+                <a href="{% url 'greeting_type' %}" title="Click to change"> <h5><strong>Change greeting type</strong></h5></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-12 card">
+        <div class="thumbnail">
+            <div class="button-toggle">
+            <a href="{% url 'activate' %}" class="{% if is_active == True %}btn btn-success{% else %}btn btn-danger{% endif %}" title="Click to change">
+                &nbsp;&nbsp;&nbsp;&nbsp;<i class="{% if is_active == True %}fa fa-toggle-on fa-3x{% else %}fa fa-toggle-off fa-3x{% endif %}"></i>&nbsp;&nbsp;&nbsp;&nbsp; </a>
+
+            <div class="state">{% if is_active == True %}Activated{% else %}DeActivated{% endif %}</div>
+            </div>
+                <div class="caption">
+                <a href="{% url 'activate' %}" title="Click to change"> <h5><strong>Activate or Deactivate Service</strong></h5></a>
+            </div>
+        </div>
+    </div>
+</div>
