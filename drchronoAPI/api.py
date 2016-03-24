@@ -7,8 +7,7 @@ def get_user_details(access_token):
     Get the details of the user, the first time, after login with drchrono
     Create a Greeting object for the user, also check if a staff's doctor already subscibed.
     """
-    response = requests.get('https://drchrono.com/api/users/current', headers={'Authorization': 'Bearer %s' % access_token,})
-    response.raise_for_status()
+    response = requests.get('https://drchrono.com/api/users/current', headers={'Authorization': 'Bearer %s' % access_token})
     return response
 
 
