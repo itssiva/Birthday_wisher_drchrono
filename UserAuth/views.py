@@ -124,6 +124,7 @@ def authorize(response):
     tokens = get_access_tokens(code)
     if tokens.status_code == 200:           # successful fetching of tokens
         tokens = tokens.json()
+        print tokens
         user = get_user_details(tokens['access_token'])
         if user.status_code == 200:         # successful get of user data from API
             user = add_update_user_and_greeting(user.json())
